@@ -137,8 +137,11 @@ class DashboardXhrGraphs(View):
         electricity = electricity[electricity_offset:electricity_offset + self.MAX_ITEMS]
 
         gas_offset = form.cleaned_data.get('gas_offset')
-        gas = gas[gas_offset:gas_offset + self.MAX_ITEMS]
-
+        newgas = gas[gas_offset:gas_offset + 2 * self.MAX_ITEMS]
+        gas = []
+        for i in range(0, int(len(newgas)/2.0)):
+            gas = gas + [newgas[2*i]]
+            gas[i].currently_delivered += newgas[2*i+1].currently_delivered
         temperature = temperature[:self.MAX_ITEMS]
 
         # Reverse all sets gain.
